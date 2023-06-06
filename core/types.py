@@ -1,5 +1,6 @@
+import graphene
 from graphene_django.types import DjangoObjectType
-from .models import BarCategory, BarSubCategory, Beverage, User, Cocktail
+from .models import BarCategory, BarSubCategory, Beverage, User, Cocktail, CocktailBeverage, CocktailStep
 
 
 class BarCategoryType(DjangoObjectType):
@@ -22,6 +23,18 @@ class UserType(DjangoObjectType):
         model = User
 
 
+class CocktailBeverageType(DjangoObjectType):
+    class Meta:
+        model = CocktailBeverage
+
+
 class CocktailType(DjangoObjectType):
+    ingrediants = graphene.List(CocktailBeverageType)
+
     class Meta:
         model = Cocktail
+        fields = "__all__"
+
+    @staticmethod
+    def resolve_ingrediants(cocktail, *args, **kwargs):
+        return cocktail.ingrediants.all()
