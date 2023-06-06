@@ -1,5 +1,5 @@
 from graphene_django.types import DjangoObjectType
-from .models import BarCategory, BarSubCategory, Beverage, User
+from .models import BarCategory, BarSubCategory, Beverage, User, Cocktail
 
 
 class BarCategoryType(DjangoObjectType):
@@ -20,3 +20,8 @@ class BeverageType(DjangoObjectType):
 class UserType(DjangoObjectType):
     class Meta:
         model = User
+
+
+class CocktailType(DjangoObjectType):
+    class Meta:
+        model = Cocktail

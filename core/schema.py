@@ -1,7 +1,7 @@
 import graphene
 import graphql_jwt
-from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType
-from core.models import BarCategory, BarSubCategory, Beverage
+from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType
+from core.models import BarCategory, BarSubCategory, Beverage, Cocktail
 from core.mutations import CreateUser
 
 
@@ -23,12 +23,18 @@ class Mutation(graphene.ObjectType):
 
 
 class Query(graphene.ObjectType):
+    # Categories
     all_barcategories = graphene.List(BarCategoryType)
     all_barsubcategories = graphene.List(BarSubCategoryType)
     barsubcategories_by_category = graphene.List(BarSubCategoryType, name=graphene.String(required=True))
+
+    # Beverages
     all_beverages = graphene.List(BeverageType)
     beverages_by_category = graphene.List(BeverageType, name=graphene.String(required=True))
     beverages_by_subcategory = graphene.List(BeverageType, name=graphene.String(required=True))
+
+    # Cocktails
+    all_cocktails = graphene.List(CocktailType)
 
     # Categories
     def resolve_all_barcategories(root, info):
@@ -49,6 +55,10 @@ class Query(graphene.ObjectType):
 
     def resolve_beverages_by_subcategory(root, info, name):
         return Beverage.objects.filter(subCategory__name=name)
+    
+    # Cocktails
+    def resolve_all_cocktails(root, info):
+        return Cocktail.objects.all()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
