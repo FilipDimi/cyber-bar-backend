@@ -30,6 +30,7 @@ class CocktailBeverageType(DjangoObjectType):
 
 class CocktailType(DjangoObjectType):
     ingrediants = graphene.List(CocktailBeverageType)
+    steps = graphene.List(CocktailBeverageType)
 
     class Meta:
         model = Cocktail
@@ -38,3 +39,7 @@ class CocktailType(DjangoObjectType):
     @staticmethod
     def resolve_ingrediants(cocktail, *args, **kwargs):
         return cocktail.ingrediants.all()
+    
+    @staticmethod
+    def resolve_steps(cocktail, *args, **kwargs):
+        return cocktail.steps.all()
