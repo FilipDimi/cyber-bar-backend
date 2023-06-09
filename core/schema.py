@@ -36,6 +36,7 @@ class Query(graphene.ObjectType):
 
     # Cocktails
     all_cocktails = graphene.List(CocktailType)
+    search_cocktail = graphene.List(CocktailType, id=graphene.String(required=True))
 
     # Categories
     def resolve_all_barcategories(root, info):
@@ -70,6 +71,9 @@ class Query(graphene.ObjectType):
     # Cocktails
     def resolve_all_cocktails(root, info):
         return Cocktail.objects.all()
+    
+    def resolve_search_cocktail(root, info, id):
+        return Cocktail.objects.get(pk=id)
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
