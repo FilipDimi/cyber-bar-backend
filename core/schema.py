@@ -36,7 +36,7 @@ class Query(graphene.ObjectType):
 
     # Cocktails
     all_cocktails = graphene.List(CocktailType)
-    search_cocktail = graphene.ObjectType(CocktailType, id=graphene.String(required=True))
+    search_cocktail = graphene.Field(CocktailType, id=graphene.String(required=True))
 
     # Categories
     def resolve_all_barcategories(root, info):
