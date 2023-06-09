@@ -48,10 +48,10 @@ class Query(graphene.ObjectType):
         return BarSubCategory.objects.filter(category__name=name)
 
     def resolve_all_beverages(root, info):
-        return Beverage.objects.all()
+        return Beverage.objects.all().order_by('count')
     
     def resolve_low_beverages(root, info):
-        all_beverages = Beverage.objects.all()
+        all_beverages = Beverage.objects.all().order_by('count')
         low_on_stock = []
 
         for beverage in all_beverages:
@@ -62,10 +62,10 @@ class Query(graphene.ObjectType):
 
     # Beverages
     def resolve_beverages_by_category(root, info, name):
-        return Beverage.objects.filter(category__name=name)
+        return Beverage.objects.filter(category__name=name).order_by('count')
 
     def resolve_beverages_by_subcategory(root, info, name):
-        return Beverage.objects.filter(subCategory__name=name)
+        return Beverage.objects.filter(subCategory__name=name).order_by('count')
     
     # Cocktails
     def resolve_all_cocktails(root, info):
