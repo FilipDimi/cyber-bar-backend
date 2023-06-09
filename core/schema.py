@@ -30,6 +30,7 @@ class Query(graphene.ObjectType):
 
     # Beverages
     all_beverages = graphene.List(BeverageType)
+    low_beverages = graphene.List(BeverageType)
     beverages_by_category = graphene.List(BeverageType, name=graphene.String(required=True))
     beverages_by_subcategory = graphene.List(BeverageType, name=graphene.String(required=True))
 
@@ -48,6 +49,16 @@ class Query(graphene.ObjectType):
 
     def resolve_all_beverages(root, info):
         return Beverage.objects.all()
+    
+    def resolve_low_beverages(root, info):
+        all_beverages = Beverage.objects.all()
+        low_on_stock = []
+
+        for beverage in all_beverages:
+            if beverage.count <= beverage.criticalCount:
+                low_on_stock.append(beverage)
+
+        return low_on_stock
 
     # Beverages
     def resolve_beverages_by_category(root, info, name):

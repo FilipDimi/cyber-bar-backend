@@ -124,6 +124,7 @@ class Cocktail(AbstractBaseModel):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cocktailuser")
     ingrediants = models.ManyToManyField(CocktailBeverage)
     steps = models.ManyToManyField(CocktailStep)
+    color = models.CharField(max_length=10, default='#ff5335')
 
     def __str__(self):
         return f"{self.name} by {self.creator.first_name} {self.creator.last_name}"
