@@ -28,9 +28,14 @@ class CocktailBeverageType(DjangoObjectType):
         model = CocktailBeverage
 
 
+class CocktailStepType(DjangoObjectType):
+    class Meta:
+        model = CocktailStep
+
+
 class CocktailType(DjangoObjectType):
     ingrediants = graphene.List(CocktailBeverageType)
-    steps = graphene.List(CocktailBeverageType)
+    steps = graphene.List(CocktailStepType)
 
     class Meta:
         model = Cocktail
