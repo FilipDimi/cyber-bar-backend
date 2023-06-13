@@ -2,7 +2,7 @@ import graphene
 import graphql_jwt
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType
 from core.models import BarCategory, BarSubCategory, Beverage, Cocktail
-from core.mutations import CreateUser
+from core.mutations import CreateUser, AddItemToTab
 
 
 class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
@@ -20,6 +20,7 @@ class Mutation(graphene.ObjectType):
     refresh_token = graphql_jwt.Refresh.Field()
 
     create_user = CreateUser.Field()
+    add_item = AddItemToTab.Field()
 
 
 class Query(graphene.ObjectType):

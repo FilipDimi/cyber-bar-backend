@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from .models import BarCategory, BarSubCategory, Beverage, User, Cocktail, CocktailBeverage, CocktailStep
+from .models import BarCategory, BarSubCategory, Beverage, User, Cocktail, CocktailBeverage, CocktailStep, BarTabItem
 
 
 class BarCategoryType(DjangoObjectType):
@@ -48,3 +48,8 @@ class CocktailType(DjangoObjectType):
     @staticmethod
     def resolve_steps(cocktail, *args, **kwargs):
         return cocktail.steps.all()
+
+
+class BarTabItemType(DjangoObjectType):
+    class Meta:
+        model = BarTabItem
