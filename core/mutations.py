@@ -45,7 +45,7 @@ class AddItemToTab(graphene.Mutation):
 
     def mutate(self, info, bev_id, user_id, count):
         item = BarTabItem()
-        item.beverage = Beverage(pk=bev_id)
+        item.beverage = Beverage.objects.get(pk=bev_id)
         item.count = count
 
         try:
@@ -63,7 +63,7 @@ class AddItemToTab(graphene.Mutation):
             temp_tab.user = User.objects.get(pk=user_id)
             temp_tab.save()
 
-        beverage = Beverage(pk=bev_id)
+        beverage = Beverage.objects.get(pk=bev_id)
         beverage.count += int(count)
         beverage.save()
 
