@@ -45,6 +45,8 @@ class AddItemToTab(graphene.Mutation):
 
     def mutate(self, info, bev_id, user_id, count):
         drink_name = Beverage(pk=bev_id)
+        print(drink_name)
+        print(Beverage(pk=bev_id))
         temp_drink = Beverage(name=drink_name)
         temp_drink.count += int(count)
         temp_drink.save()
