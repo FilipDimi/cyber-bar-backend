@@ -27,7 +27,7 @@ class Mutation(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     # User
-    user = graphene.List(UserType, token=graphene.String(required=True), user_pk=graphene.String(required=True))
+    current_user = graphene.Field(UserType, token=graphene.String(required=True))
 
     # Categories
     all_barcategories = graphene.List(BarCategoryType)
