@@ -46,7 +46,7 @@ class Query(graphene.ObjectType):
 
     # Users
     def resolve_current_user(root, info, **kwargs):
-        user = User
+        user = info.context.user
         return user
 
     # Categories
