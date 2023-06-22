@@ -1,9 +1,11 @@
 import graphene
 import graphql_jwt
+from django.contrib.auth import get_user_model
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType
 from core.models import BarCategory, BarSubCategory, Beverage, Cocktail
 from core.mutations import CreateUser, AddItemToTab
 
+User = get_user_model()
 
 class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
     user = graphene.Field(UserType)
@@ -44,7 +46,7 @@ class Query(graphene.ObjectType):
 
     # Users
     def resolve_current_user(root, info, **kwargs):
-        user = info.context.user
+        user = User
         return user
 
     # Categories
