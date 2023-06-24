@@ -1,6 +1,7 @@
 import graphene
 import graphql_jwt
 from django.contrib.auth import get_user_model
+from graphql_jwt.decorators import login_required
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType
 from core.models import BarCategory, BarSubCategory, Beverage, Cocktail
 from core.mutations import CreateUser, AddItemToTab
@@ -45,6 +46,7 @@ class Query(graphene.ObjectType):
     search_cocktail = graphene.Field(CocktailType, id=graphene.String(required=True))
 
     # Users
+    @login_required
     def resolve_current_user(root, info, **kwargs):
         user = info.context.user
         return user
