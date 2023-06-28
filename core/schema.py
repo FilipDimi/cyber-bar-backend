@@ -46,7 +46,6 @@ class Query(graphene.ObjectType):
     search_cocktail = graphene.Field(CocktailType, id=graphene.String(required=True))
 
     # Users
-    @login_required
     def resolve_current_user(root, info, **kwargs):
         user = info.context.user
         return user
