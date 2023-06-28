@@ -8,21 +8,21 @@ from core.mutations import CreateUser, AddItemToTab
 
 User = get_user_model()
 
-class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
-    user = graphene.Field(UserType)
+# class ObtainJSONWebToken(graphql_jwt.JSONWebTokenMutation):
+#     user = graphene.Field(UserType)
 
-    @classmethod
-    def resolve(cls, root, info, **kwargs):
-        return cls(user=info.context.user)
+#     @classmethod
+#     def resolve(cls, root, info, **kwargs):
+#         return cls(user=info.context.user)
 
 
 class Mutation(graphene.ObjectType):
     # token_auth = graphql_jwt.ObtainJSONWebToken.Field()
-    token_auth = ObtainJSONWebToken.Field()
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
 
-    create_user = CreateUser.Field()
+    user_create = CreateUser.Field()
     add_item = AddItemToTab.Field()
 
 
