@@ -28,7 +28,7 @@ class Mutation(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     # User
-    current_user = graphene.Field(UserType)
+    current_user = graphene.Field(UserType, token=graphene.String(required=True))
 
     # Categories
     all_barcategories = graphene.List(BarCategoryType)
@@ -46,6 +46,7 @@ class Query(graphene.ObjectType):
     search_cocktail = graphene.Field(CocktailType, id=graphene.String(required=True))
 
     # Users
+    @login_required
     def resolve_current_user(root, info, **kwargs):
         user = info.context.user
         return user
