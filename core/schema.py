@@ -3,7 +3,7 @@ import graphql_jwt
 from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import login_required
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType, BarTabItemType
-from core.models import BarCategory, BarSubCategory, Beverage, Cocktail, BarArchive, BarTabItem
+from core.models import BarCategory, BarSubCategory, Beverage, Cocktail, BarArchive, BarTabItem, BarTab
 from core.mutations import CreateUser, AddItemToTab
 from datetime import datetime
 
@@ -88,7 +88,9 @@ class Query(graphene.ObjectType):
     def resolve_user_tab(root, info, user_pk):
         temp_archive = BarArchive.objects.get(date=str(datetime.today().strftime('%Y-%m-%d')))
         temp_user = User.objects.get(pk=user_pk)
-        tab_items = BarTabItem.objects.filter(date=temp_archive, user=temp_user)
+        temp_bar_tab = BarTab.objects.get(date=temp_archive, user=temp_user)
+        tab_items = BarTabItem.objects.filter(bartab=temp_bar_tab)
+        
         return tab_items
 
 
