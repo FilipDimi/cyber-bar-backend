@@ -45,7 +45,7 @@ class Query(graphene.ObjectType):
         return user
     
     # Tabs
-    user_tab = graphene.Field(BarTabItemType, user_pk=graphene.String(required=True))
+    user_tab = graphene.List(BarTabItemType, user_pk=graphene.String(required=True))
 
     # Categories
     def resolve_all_barcategories(root, info):
