@@ -22,6 +22,7 @@ class Mutation(graphene.ObjectType):
 class Query(graphene.ObjectType):
     # User
     current_user = graphene.Field(UserType, token=graphene.String(required=True))
+    user_id = graphene.Field(UserType, username=graphene.String(required=True))
 
     # Categories
     all_barcategories = graphene.List(BarCategoryType)
@@ -37,15 +38,19 @@ class Query(graphene.ObjectType):
     # Cocktails
     all_cocktails = graphene.List(CocktailType)
     search_cocktail = graphene.Field(CocktailType, id=graphene.String(required=True))
-
+    
+    # Tabs
+    user_tab = graphene.List(BarTabItemType, user_pk=graphene.String(required=True))
+    
+    
     # Users
     @login_required
     def resolve_current_user(root, info, **kwargs):
         user = info.context.user
         return user
     
-    # Tabs
-    user_tab = graphene.List(BarTabItemType, user_pk=graphene.String(required=True))
+    def resolve_user_id(root, info, username):
+        return User.objects.get(username=username)
 
     # Categories
     def resolve_all_barcategories(root, info):
@@ -90,7 +95,7 @@ class Query(graphene.ObjectType):
         temp_user = User.objects.get(pk=user_pk)
         temp_bar_tab = BarTab.objects.get(date=temp_archive, user=temp_user)
         tab_items = BarTabItem.objects.filter(bartab=temp_bar_tab)
-        
+
         return tab_items
 
 
