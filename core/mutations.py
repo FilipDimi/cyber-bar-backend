@@ -4,6 +4,10 @@ from django.contrib.auth import get_user_model
 from .types import UserType, BarTabItemType
 from .models import Beverage, BarArchive, BarTab, BarTabItem
 
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 
 User = get_user_model()
 
@@ -73,4 +77,45 @@ class AddItemToTab(graphene.Mutation):
 
         return AddItemToTab(tab=item)
 
+
+class SendTabToUsers(graphene.Mutation):
+    tab = graphene.Field(BarTabItemType)
+
+    class Arguments:
+        user_id = graphene.String(required=True)
+
+    def mutate(self, info, user_id):
+        all_beverages = Beverage.objects.all()
+        low_beverages = []
+        current_user = User.objects.get(pk=user_id)
+        users = User.objects.all()
+        user_emails = []
+
+        for user in users:
+            user_emails.append(user.email)
+
+        for beverage in all_beverages:
+            if beverage.count <= beverage.criticalCount:
+                low_beverages.append(beverage)
+        
+        print(f"Cu: {current_user.first_name} {current_user.last_name}")
+        print(user_emails)
+        print(low_beverages)
+
+        message = Mail(
+            from_email='f_dimitrievski@outlook.com',
+            to_emails='filipdimitrievski@protonmail.com',
+            subject='Sending with Twilio SendGrid is Fun',
+            html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        try:
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
+        except Exception as e:
+            print(e)
+
+        current_tab = BarTabItem()
+        return SendTabToUsers(tab=current_tab)
         

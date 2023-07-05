@@ -32,6 +32,7 @@ DEBUG = os.environ.get("DEBUG")
 ALLOWED_HOSTS = [
     "*",
     "http://localhost:3000/",
+    "https://cyber-bar-frontend.vercel.app/",
 ]
 
 # Application definition
