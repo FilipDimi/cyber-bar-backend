@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import login_required
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType, BarTabItemType
 from core.models import BarCategory, BarSubCategory, Beverage, Cocktail, BarArchive, BarTabItem, BarTab
-from core.mutations import CreateUser, AddItemToTab, SendTabToUsers
+from core.mutations import CreateUser, AddItemToTab
 from datetime import datetime
 
 User = get_user_model()

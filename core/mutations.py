@@ -4,11 +4,6 @@ from django.contrib.auth import get_user_model
 from .types import UserType, BarTabItemType
 from .models import Beverage, BarArchive, BarTab, BarTabItem
 
-import os
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
-
 User = get_user_model()
 
 
