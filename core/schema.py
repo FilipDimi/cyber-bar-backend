@@ -17,7 +17,7 @@ class Mutation(graphene.ObjectType):
 
     user_create = CreateUser.Field()
     add_item = AddItemToTab.Field()
-    send_tab_to_users = SendTabToUsers.Field()
+    # send_tab_to_users = SendTabToUsers.Field()
 
 
 class Query(graphene.ObjectType):
