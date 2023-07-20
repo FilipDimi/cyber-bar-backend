@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from graphql_jwt.decorators import login_required
 from core.types import BarCategoryType, BarSubCategoryType, BeverageType, UserType, CocktailType, BarTabItemType
 from core.models import BarCategory, BarSubCategory, Beverage, Cocktail, BarArchive, BarTabItem, BarTab
-from core.mutations import CreateUser, AddItemToTab
+from core.mutations import CreateUser, AddItemToTab, SendTabToUsers, CheckInBeverage
 from datetime import datetime
 
 User = get_user_model()
@@ -17,7 +17,8 @@ class Mutation(graphene.ObjectType):
 
     user_create = CreateUser.Field()
     add_item = AddItemToTab.Field()
-    # send_tab_to_users = SendTabToUsers.Field()
+    send_tab_to_users = SendTabToUsers.Field()
+    check_in = CheckInBeverage.Field()
 
 
 class Query(graphene.ObjectType):
