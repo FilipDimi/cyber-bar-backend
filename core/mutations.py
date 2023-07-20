@@ -4,9 +4,6 @@ from django.contrib.auth import get_user_model
 from .types import UserType, BarTabItemType, BeverageType
 from .models import Beverage, BarArchive, BarTab, BarTabItem
 
-import sendgrid
-from sendgrid.helpers.mail import *
-
 User = get_user_model()
 
 
@@ -89,41 +86,3 @@ class CheckInBeverage(graphene.Mutation):
         bev.save()
 
         return CheckInBeverage(beverage = bev)
-
-
-class SendTabToUsers(graphene.Mutation):
-    tab = graphene.Field(BarTabItemType)
-
-    class Arguments:
-        user_id = graphene.String(required=True)
-
-    def mutate(self, info, user_id):
-        all_beverages = Beverage.objects.all()
-        low_beverages = []
-        current_user = User.objects.get(pk=user_id)
-        users = User.objects.all()
-        user_emails = []
-
-        for user in users:
-            user_emails.append(user.email)
-
-        for beverage in all_beverages:
-            if beverage.count <= beverage.criticalCount:
-                low_beverages.append(beverage)
-        
-        print(f"Cu: {current_user.first_name} {current_user.last_name}")
-        print(user_emails)
-        print(low_beverages)
-
-        sg = sendgrid.SendGridAPIClient(api_key='TEST')
-        from_email = Email("f_dimitrievski@outlook.com")
-        to_email = To("filipdimitrievski@protonmail.com")
-        subject = "Sending with SendGrid is Fun"
-        content = Content("text/plain", "and easy to do anywhere, even with Python")
-        mail = Mail(from_email, to_email, subject, content)
-        response = sg.client.mail.send.post(request_body=mail.get())
-        print(response)
-
-        current_tab = BarTabItem()
-        return SendTabToUsers(tab=current_tab)
-        
