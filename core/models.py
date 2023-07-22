@@ -92,7 +92,7 @@ class Beverage(AbstractBaseModel):
     criticalCount = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.count}/{self.criticalCount}"
 
 
 class CocktailBeverage(AbstractBaseModel):
