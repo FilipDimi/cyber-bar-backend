@@ -165,7 +165,7 @@ GRAPHENE = {
 
 GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
-    "JWT_EXPIRATION_DELTA": timedelta(minutes=60),
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=420),
     "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=7),
 }
 
